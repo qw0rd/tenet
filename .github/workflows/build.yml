@@ -1,0 +1,18 @@
+
+name: Build tenet
+on: [push]
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install deps
+        run: sudo apt-get install -y clang llvm lld python3-pip ninja-build
+      - uses: actions/checkout@v2
+      - name: Build the kernel and friends
+        run: |
+          pip install meson
+          meson build --cross-file toolchain/clang-x86_64.ini
+          cd build
+          ninja
+
+
