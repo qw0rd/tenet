@@ -2,6 +2,7 @@
 
 
 libcore_src = [
+    'stdio.c',
     'string.c'
 ]
 

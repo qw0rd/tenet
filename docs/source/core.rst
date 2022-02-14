@@ -17,6 +17,8 @@ All the provided functions are freestanding except printk.
 The definition of `putchar` should be provided by the library user.
 
 .. doxygenfunction:: memcpy
+.. doxygenfunction:: sprintf
+.. doxygenfunction:: printk
 
 .. toctree::
     core/core

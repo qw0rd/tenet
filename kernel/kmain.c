@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <core/string.h>
+#include <core/stdio.h>
 
 #define LOOP while (1)
 
@@ -53,6 +54,13 @@ void* get_tag_by_id(struct stivale2_tag* head, uint64_t id)
 
 typedef void (*terminal)(const char*, uint64_t);
 
+static terminal _term;
+
+void putstr(const char* c, size_t len)
+{
+    _term(c, len);
+}
+
 __attribute__((noreturn)) void _start(struct stivale2_struct* info)
 {
     struct stivale2_struct_tag_terminal* t = get_tag_by_id((void*)info->tags, STIVALE2_STRUCT_TAG_TERMINAL_ID);
@@ -62,8 +70,15 @@ __attribute__((noreturn)) void _start(struct stivale2_struct* info)
         }
     }
 
-    terminal term = (terminal)t->term_write;
-    term("Helo", 4);
+    _term = (terminal)t->term_write;
+
+    printk("Hello, kernel\n");
+
+    /*
+    char buf[1024];
+    int len = sprintf(buf, "Hello, %s - %lu:%%\n", "world", 42949672345);
+    term(buf, len);
+    */
 
     LOOP {
         asm("mov $0xbeef, %rax");

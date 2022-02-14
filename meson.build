@@ -37,6 +37,8 @@ c_flags = [
     '-mno-sse',
     '-mno-sse2',
     '-mno-3dnow',
+
+    '-Werror=return-type'
 ]
 
 link_flags = [
@@ -68,7 +70,7 @@ if cc.get_id() == 'clang'
     c_flags += '--target=x86_64-elf'
 endif
 
-add_project_arguments([c_flags, '-fuse-ld=lld'], language: ['c'])
+add_project_arguments([c_flags], language: ['c'])
 add_project_link_arguments(link_flags, language: ['c'])
 
 subdir('lib')
