@@ -1,4 +1,5 @@
-
+// Copyright (c) 2022, David John <dave@qword.space>
+// This code is licensed under GNU GPL v2.
 
 .macro ISR_DEF name, fn
 .global \name
