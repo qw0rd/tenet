@@ -1,11 +1,12 @@
-#include <tenet/asm.h>
-#include <boot/stivale.h>
 #include <stdint.h>
 #include <stddef.h>
+#include <stdatomic.h>
+#include <tenet/asm.h>
+#include <boot/stivale.h>
 #include <core/string.h>
 #include <core/stdio.h>
-
-#define LOOP while (1)
+#include <tenet/core.h>
+#include <tenet/interrupts.h>
 
 enum {
     STACK_SIZE = 4096 * 4
@@ -61,6 +62,8 @@ void putstr(const char* c, size_t len)
     _term(c, len);
 }
 
+extern int add(int x, int y);
+
 __attribute__((noreturn)) void _start(struct stivale2_struct* info)
 {
     struct stivale2_struct_tag_terminal* t = get_tag_by_id((void*)info->tags, STIVALE2_STRUCT_TAG_TERMINAL_ID);
@@ -71,17 +74,8 @@ __attribute__((noreturn)) void _start(struct stivale2_struct* info)
     }
 
     _term = (terminal)t->term_write;
+    init_idt();
+    printk("Hello, world!\n");
 
-    printk("Hello, kernel\n");
-
-    /*
-    char buf[1024];
-    int len = sprintf(buf, "Hello, %s - %lu:%%\n", "world", 42949672345);
-    term(buf, len);
-    */
-
-    LOOP {
-        asm("mov $0xbeef, %rax");
-    }
+    hang(0xcafe);
 }
-

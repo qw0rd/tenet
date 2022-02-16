@@ -4,6 +4,8 @@ inc_dir = include_directories('../include')
 inc_dir_lib = include_directories('../include/lib')
 
 kernel_src = files(
+    'int.S',
+    'interrupts.c',
     'kmain.c'
 )
 

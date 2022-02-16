@@ -12,6 +12,7 @@ Welcome to Tenet's documentation!
 
    core
 
+.. doxygenfunction:: hang
 
 Indices and tables
 ==================

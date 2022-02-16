@@ -37,6 +37,7 @@ c_flags = [
     '-mno-sse',
     '-mno-sse2',
     '-mno-3dnow',
+    '-mno-red-zone',
 
     '-Werror=return-type'
 ]
